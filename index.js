@@ -24,6 +24,9 @@ app.get('/', (req, res) => {
         </head>
         <body>
             <h1>Welcome to the pre-handlebars test page!</h1>
+            <p><a href="/icecream/chocolate">Chocolate</a></p>
+            <p><a href="/icecream/banana">banana</a></p>
+
         </body>
     </html>
     `);
@@ -40,8 +43,13 @@ var icecreams = [
 
 app.get("/icecream/:name", function (req, res) {
     var chosen_ice_cream = req.params.name;
-    // res.send(`You picked ${chosen_ice_cream}`);
-    res.render("icecream", {flavor: chosen_ice_cream});
+    for (let i = 0; i < icecreams.length; i++) {
+        if (chosen_ice_cream.toLowerCase() === icecreams[i].name) {
+            res.render("icecream", icecreams[i]);
+            return;
+        }
+    }
+    res.render("noicecream");
 });
 
 
